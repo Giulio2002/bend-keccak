@@ -1,0 +1,9 @@
+[project]
+name = "bend-keccak"
+version = "0.1.0"
+description = "Packed Ethereum Keccak-256 in Bend, checked laws and XKCP comparison"
+requires-python = ">=3.11"
+dependencies = ["pycryptodome==3.23.0"]
+
+[tool.uv]
+package = false

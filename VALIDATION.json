@@ -1,0 +1,47 @@
+{
+  "proof_seconds": 4.815485999977682,
+  "js_cases": 278,
+  "native_cases": 278,
+  "mutations": [
+    {
+      "name": "rotation",
+      "rejected_by": "proof"
+    },
+    {
+      "name": "constant",
+      "rejected_by": "proof"
+    },
+    {
+      "name": "chi",
+      "rejected_by": "proof"
+    },
+    {
+      "name": "digest_order",
+      "rejected_by": "proof"
+    },
+    {
+      "name": "capacity",
+      "rejected_by": "proof"
+    },
+    {
+      "name": "partial_suffix",
+      "rejected_by": "proof"
+    },
+    {
+      "name": "final_padding_bit",
+      "rejected_by": "proof"
+    },
+    {
+      "name": "block_word_index",
+      "rejected_by": "proof"
+    },
+    {
+      "name": "block_count",
+      "rejected_by": "proof"
+    },
+    {
+      "name": "selected_round_count",
+      "rejected_by": "proof"
+    }
+  ]
+}

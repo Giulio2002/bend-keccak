@@ -1,0 +1,287 @@
+{
+  "host": "macOS-15.6-arm64-arm-64bit",
+  "bend": "bend 2.0.16",
+  "compiler": "Apple clang version 17.0.0 (clang-1700.6.3.2)",
+  "flags": [
+    "-O3",
+    "-march=native",
+    "-std=c11"
+  ],
+  "reference_commit": "eb5244d6b95fb1c434b211bac293093e18aa8fd1",
+  "warmups": 1,
+  "samples": 5,
+  "boundary": "Repeated public hashes, input preparation excluded; packed input clone included in Bend, memcpy into preallocated scratch included in C. Digest checksum retained.",
+  "rows": [
+    {
+      "bytes": 0,
+      "count": 524288,
+      "samples_ms": {
+        "bend": [
+          350.0,
+          346.0,
+          342.0,
+          341.0,
+          338.0
+        ],
+        "xkcp": [
+          95.614,
+          93.317,
+          91.475,
+          93.989,
+          91.429
+        ]
+      },
+      "us_per_hash": {
+        "bend": 0.652313232421875,
+        "xkcp": 0.17798805236816406
+      },
+      "ratio": 3.664927076524106,
+      "checksum_verified": true
+    },
+    {
+      "bytes": 32,
+      "count": 524288,
+      "samples_ms": {
+        "bend": [
+          341.0,
+          341.0,
+          340.0,
+          343.0,
+          336.0
+        ],
+        "xkcp": [
+          92.375,
+          92.199,
+          92.288,
+          92.297,
+          91.501
+        ]
+      },
+      "us_per_hash": {
+        "bend": 0.6504058837890625,
+        "xkcp": 0.176025390625
+      },
+      "ratio": 3.69495492371706,
+      "checksum_verified": true
+    },
+    {
+      "bytes": 64,
+      "count": 524288,
+      "samples_ms": {
+        "bend": [
+          342.0,
+          343.0,
+          340.0,
+          339.0,
+          333.0
+        ],
+        "xkcp": [
+          91.493,
+          91.514,
+          93.135,
+          92.298,
+          93.18
+        ]
+      },
+      "us_per_hash": {
+        "bend": 0.64849853515625,
+        "xkcp": 0.17604446411132812
+      },
+      "ratio": 3.6837201239463475,
+      "checksum_verified": true
+    },
+    {
+      "bytes": 135,
+      "count": 497102,
+      "samples_ms": {
+        "bend": [
+          336.0,
+          339.0,
+          337.0,
+          339.0,
+          338.0
+        ],
+        "xkcp": [
+          91.138,
+          91.77,
+          92.687,
+          92.538,
+          92.78
+        ]
+      },
+      "us_per_hash": {
+        "bend": 0.6799409376747629,
+        "xkcp": 0.186154954114045
+      },
+      "ratio": 3.6525535455704685,
+      "checksum_verified": true
+    },
+    {
+      "bytes": 136,
+      "count": 493447,
+      "samples_ms": {
+        "bend": [
+          631.0,
+          630.0,
+          631.0,
+          636.0,
+          631.0
+        ],
+        "xkcp": [
+          173.886,
+          172.964,
+          172.863,
+          173.114,
+          173.092
+        ]
+      },
+      "us_per_hash": {
+        "bend": 1.2787594209712492,
+        "xkcp": 0.3507813402452543
+      },
+      "ratio": 3.6454602176877033,
+      "checksum_verified": true
+    },
+    {
+      "bytes": 137,
+      "count": 489845,
+      "samples_ms": {
+        "bend": [
+          621.0,
+          532.0,
+          512.0,
+          507.0,
+          489.0
+        ],
+        "xkcp": [
+          153.584,
+          150.017,
+          141.85,
+          142.133,
+          139.391
+        ]
+      },
+      "us_per_hash": {
+        "bend": 1.0452285927181046,
+        "xkcp": 0.2901591319703171
+      },
+      "ratio": 3.6022598552060394,
+      "checksum_verified": true
+    },
+    {
+      "bytes": 1024,
+      "count": 65536,
+      "samples_ms": {
+        "bend": [
+          257.0,
+          266.0,
+          271.0,
+          259.0,
+          265.0
+        ],
+        "xkcp": [
+          77.423,
+          73.745,
+          74.389,
+          72.817,
+          74.495
+        ]
+      },
+      "us_per_hash": {
+        "bend": 4.0435791015625,
+        "xkcp": 1.1350860595703125
+      },
+      "ratio": 3.5623546492088884,
+      "checksum_verified": true
+    },
+    {
+      "bytes": 16384,
+      "count": 4096,
+      "samples_ms": {
+        "bend": [
+          252.0,
+          255.0,
+          255.0,
+          256.0,
+          257.0
+        ],
+        "xkcp": [
+          73.513,
+          71.768,
+          71.701,
+          71.595,
+          71.723
+        ]
+      },
+      "us_per_hash": {
+        "bend": 62.255859375,
+        "xkcp": 17.510498046875
+      },
+      "ratio": 3.5553448684522397,
+      "checksum_verified": true
+    },
+    {
+      "bytes": 65536,
+      "count": 1024,
+      "samples_ms": {
+        "bend": [
+          260.0,
+          256.0,
+          255.0,
+          255.0,
+          256.0
+        ],
+        "xkcp": [
+          71.561,
+          72.037,
+          72.48,
+          71.527,
+          71.577
+        ]
+      },
+      "us_per_hash": {
+        "bend": 250.0,
+        "xkcp": 69.8994140625
+      },
+      "ratio": 3.576567891920589,
+      "checksum_verified": true
+    },
+    {
+      "bytes": 1048576,
+      "count": 64,
+      "samples_ms": {
+        "bend": [
+          255.0,
+          256.0,
+          254.0,
+          255.0,
+          255.0
+        ],
+        "xkcp": [
+          72.59,
+          72.527,
+          72.482,
+          72.88,
+          72.669
+        ]
+      },
+      "us_per_hash": {
+        "bend": 3984.375,
+        "xkcp": 1134.21875
+      },
+      "ratio": 3.51288056206089,
+      "checksum_verified": true
+    }
+  ],
+  "binary_sha256": {
+    "bench": "ac5d462ac9ea053fcd16d35ba4aa2320824ddaf11e855c385aca832d69d403e2",
+    "xkcp": "4cde500d94b9be3797a74f8819d4bc3ea09967ec73ce25a5dfb7e96dbed66566"
+  },
+  "production_sha256": {
+    "src/permutation.bend": "8812e31805cf1db0ffd98cbb7f4349be2f21207b259b17b0e7c0d6f23fd77e11",
+    "src/hex.bend": "607ca4a6ecc620c6598d4506c29cdbc5461c006f20394906e5ce1a28bf17779a",
+    "src/keccak.bend": "1aed0cd74f2285ae95c84fb24e936e75919650de8c0c43f35084ddce5a62be08",
+    "src/types.bend": "e4012298aeaf5bf25f9fbf43b4b1c1405902f20b4c44ee252c7740c6432a954c",
+    "src/lane.bend": "c060182a6a1ad25b6342c2f15fe532b1971bb2072b5f3570ba2a300460a6b2ae"
+  }
+}
