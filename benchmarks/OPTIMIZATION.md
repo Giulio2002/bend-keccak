@@ -30,6 +30,5 @@ baseline was adopted to manufacture a target pass.
 Probe data is retained in `benchmarks/experiments/`. These are exploratory timings
 on a changing shared-host load; they are not the release benchmark. Some probes
 ran while build/proof work was active and are unsuitable for close comparisons.
-Use `lean-comparison-arm64.json` for the fresh published comparison and
-`results-arm64.json` for the earlier C-only baseline. The next accepted optimization
+Use `comparison-arm64.json` for the current four-way comparison; the other JSON files are historical runs. The next accepted optimization
 must improve paired measurements and retain the existing public laws.

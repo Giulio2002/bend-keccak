@@ -1,0 +1,26 @@
+{
+  "package": "0x48cee57f42dae6ba4c727fbf982cdd4d",
+  "url": "https://hub.bend-lang.com/0x48cee57f42dae6ba4c727fbf982cdd4d",
+  "entry": "package.bend",
+  "runtime_entry": "keccak.bend",
+  "license": "MIT",
+  "source_files": {
+    "LAWS.bend": "cc8d8956cd31872a01c7901dc77524ae54857c9655c1ceead7e7c30c29c57d45",
+    "PROOF.bend": "34f7cb9bcd57a487556667af258387b4a7bf3beeeced74778fdcb14fb3e605f0",
+    "keccak.bend": "123d35c44ce0867bf00b7ea6b1b7888586f1d14d884ef8fe03e36f1b6bf6c191",
+    "package.bend": "40776d71210024bdafacfaf29fc34ab30921886a0f23673bf8471431602a9242",
+    "proofs/api.bend": "9952d7b08711f6106a6c8f19d9f767c3fae3971048c8a4b1bd363e5d239a295d",
+    "proofs/array.bend": "e2b75e5120c61f780a0eb7d252d4a16c732f664d4e05aea6688848e4fe50bcd0",
+    "proofs/permutation.bend": "ac72bf81ecd4324196e119d4e3102a47306e4f19ed2fd6fc4899433b87a641b7",
+    "proofs/sponge.bend": "6944c39e0e535613b64ba40ea95f20cc8bbc7f0a13c00d5e3deeca04c4ebbadb",
+    "spec/permutation.bend": "3f8e4cd8600cdf67b2590c91c0a9417e7dcd06a351c32a47f06cde46cff04b13",
+    "spec/sponge.bend": "83fac05fe05732f6608d79a46efd1c334197e6217ff26e32c6aa24de90ff87ee",
+    "src/hex.bend": "607ca4a6ecc620c6598d4506c29cdbc5461c006f20394906e5ce1a28bf17779a",
+    "src/keccak.bend": "1aed0cd74f2285ae95c84fb24e936e75919650de8c0c43f35084ddce5a62be08",
+    "src/lane.bend": "c060182a6a1ad25b6342c2f15fe532b1971bb2072b5f3570ba2a300460a6b2ae",
+    "src/permutation.bend": "8812e31805cf1db0ffd98cbb7f4349be2f21207b259b17b0e7c0d6f23fd77e11",
+    "src/types.bend": "e4012298aeaf5bf25f9fbf43b4b1c1405902f20b4c44ee252c7740c6432a954c"
+  },
+  "bytes": 149853,
+  "validation": "Published proof closure checks; clean-cache README example and empty/abc/dirty-unused-byte/invalid-length cases pass on interpreter and native C. All downloaded sources match local files byte-for-byte."
+}

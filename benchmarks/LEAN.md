@@ -3,7 +3,7 @@
 This benchmark compares the existing verified Bend implementation against the
 compiled runtime path of [KeccakEngine](https://github.com/AlexeyMilovanov/lean-keccak-unrolled)
 at `053b9ddee2084332e0a7b25800bca9d4f56ffa8d`, plus XKCP's portable optimized C.
-It is a comparison of these implementations, not an upper bound on Lean performance.
+Lean is compiled through **Lean 4’s C backend into a native executable**, not run through `lean --run` or an interpreter. It is a comparison of these implementations, not an upper bound on Lean performance.
 
 ## What the Lean participant runs
 
@@ -70,5 +70,5 @@ uv run python tools/benchmark_lean.py
 ```
 
 `build_lean.py` uses the library's pinned `lean-toolchain`; elan may download it.
-The output is `benchmarks/lean-comparison-arm64.json` on this tested Apple M4 host.
+That historical three-way runner writes `benchmarks/lean-comparison-arm64.json`. The current release comparison uses `tools/benchmark_all.py` and writes `benchmarks/comparison-arm64.json`; see [BENCHMARKS.md](BENCHMARKS.md).
 Measurements are from a shared machine, not an isolated performance lab.

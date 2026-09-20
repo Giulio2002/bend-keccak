@@ -1,0 +1,532 @@
+{
+  "host": "macOS-15.6-arm64-arm-64bit",
+  "cpu": "Apple M4",
+  "timestamp_utc": "2026-09-20T16:32:05Z",
+  "bend_version": "bend 2.0.16",
+  "bend_c_compiler": "Apple clang version 17.0.0 (clang-1700.6.3.2)",
+  "lean_build": {
+    "upstream": "https://github.com/AlexeyMilovanov/lean-keccak-unrolled",
+    "commit": "053b9ddee2084332e0a7b25800bca9d4f56ffa8d",
+    "lean_version": "Lean (version 4.29.0, arm64-apple-darwin24.6.0, commit 98dc76e3c0a9b856c9b98726b713fb04fab16740, Release)",
+    "compiler": "clang version 19.1.2 (https://github.com/llvm/llvm-project 7ba7d8e2f7b6445b60679da826210cdde29eaf8b)",
+    "compiler_command": ".> /Users/monkeair/work/ssz-lean-toolchain/toolchains/leanprover--lean4---v4.29.0/bin/clang -c -o /Users/monkeair/work/bend-keccak/build/lean/.lake/build/ir/KeccakEngine/Spec.c.o.export /Users/monkeair/work/bend-keccak/build/lean/.lake/build/ir/KeccakEngine/Spec.c -I /Users/monkeair/work/ssz-lean-toolchain/toolchains/leanprover--lean4---v4.29.0/include -fstack-clash-protection -fdata-sections -ffunction-sections -fvisibility=hidden -Wno-unused-command-line-argument --sysroot /Users/monkeair/work/ssz-lean-toolchain/toolchains/leanprover--lean4---v4.29.0 -nostdinc -isystem /Users/monkeair/work/ssz-lean-toolchain/toolchains/leanprover--lean4---v4.29.0/include/clang -O3 -DNDEBUG -O3 -march=native -DLEAN_EXPORTING",
+    "flags": [
+      "-O3",
+      "-march=native"
+    ],
+    "proof_chain_rebuilt": false,
+    "runtime_binding": "Benchmark shim calls Spec.keccakF1600, the exact target of upstream Core implemented_by. Spec.lean and Sponge.lean copied byte-for-byte.",
+    "files": {
+      "KeccakEngine/Spec.lean": "7f38a0550d56df5ff04331c8724316fff33a9f810b8f495ca1e140e5823f625c",
+      "KeccakEngine/Sponge.lean": "08bbd3dbd68ba4f093a7c734922e5eda07e6cc411cb469bd8af1e2d91deb73fd",
+      "KeccakEngine/Core.lean": "2114459f8cae0fca1b2866c9973f340f5c294c7af646c34075b5235f9165adc3",
+      "Bench.lean": "c48a9ea65752ce93b06c0a7b05114dacce5eb2c85bf0c4f92a49bebdfb66525d"
+    }
+  },
+  "c_reference_commit": "eb5244d6b95fb1c434b211bac293093e18aa8fd1",
+  "c_implementations": {
+    "c_optimized": "XKCP plain-64bits fully unrolled; portable C, no assembly",
+    "c_portable": "XKCP compact64; portable C, no assembly"
+  },
+  "flags": [
+    "-O3",
+    "-march=native",
+    "-std=c11 (Bend/XKCP)"
+  ],
+  "boundary": "Sequential repeated public hashes of prepared data. Bend consumes/clones its packed array; Lean reuses its immutable ByteArray; XKCP copies into preallocated scratch. Input generation, process startup, hex formatting, and validation excluded. Digest allocation and checksum included. Counts calibrated per implementation for timer resolution.",
+  "samples": 5,
+  "warmups": 1,
+  "target_batch_ms": 250,
+  "validation": {
+    "lean_full_digests": 276,
+    "bend_cases": 278,
+    "c_optimized_full_digests": 276,
+    "c_portable_full_digests": 276,
+    "timed_checksums": "all samples checked against PyCryptodome Keccak"
+  },
+  "binary_sha256": {
+    "bend": "ac5d462ac9ea053fcd16d35ba4aa2320824ddaf11e855c385aca832d69d403e2",
+    "lean": "ea204840100f226fdddfa48086fda8f79d47df0e74b788320c2ff7e355065c50",
+    "c_optimized": "3d77756262aa118698eadd15508067d3ffa2f3e93eab06b4648e9221c46cad54",
+    "c_portable": "94ffcbf417b1973063a00463dafb325adedbe95cd94077168e70239200d0a326"
+  },
+  "production_sha256": {
+    "src/permutation.bend": "8812e31805cf1db0ffd98cbb7f4349be2f21207b259b17b0e7c0d6f23fd77e11",
+    "src/hex.bend": "607ca4a6ecc620c6598d4506c29cdbc5461c006f20394906e5ce1a28bf17779a",
+    "src/keccak.bend": "1aed0cd74f2285ae95c84fb24e936e75919650de8c0c43f35084ddce5a62be08",
+    "src/types.bend": "e4012298aeaf5bf25f9fbf43b4b1c1405902f20b4c44ee252c7740c6432a954c",
+    "src/lane.bend": "c060182a6a1ad25b6342c2f15fe532b1971bb2072b5f3570ba2a300460a6b2ae"
+  },
+  "rows": [
+    {
+      "bytes": 0,
+      "counts": {
+        "bend": 341333,
+        "lean": 375,
+        "c_optimized": 1048576,
+        "c_portable": 713503
+      },
+      "samples_ms": {
+        "bend": [
+          220.0,
+          220.0,
+          221.0,
+          222.0,
+          220.0
+        ],
+        "lean": [
+          250.325416,
+          237.977042,
+          237.887917,
+          241.793792,
+          274.622458
+        ],
+        "c_optimized": [
+          186.054,
+          188.481,
+          188.335,
+          190.05,
+          183.167
+        ],
+        "c_portable": [
+          246.851,
+          243.681,
+          239.108,
+          245.108,
+          252.37
+        ]
+      },
+      "us_per_hash": {
+        "bend": 0.6445318794256635,
+        "lean": 644.7834453333332,
+        "c_optimized": 0.1796102523803711,
+        "c_portable": 0.34352763758526594
+      },
+      "lean_over_bend": 1000.3903079361938,
+      "bend_over_c": 3.5885027212182785
+    },
+    {
+      "bytes": 32,
+      "counts": {
+        "bend": 341333,
+        "lean": 378,
+        "c_optimized": 1048576,
+        "c_portable": 478505
+      },
+      "samples_ms": {
+        "bend": [
+          348.0,
+          325.0,
+          246.0,
+          221.0,
+          221.0
+        ],
+        "lean": [
+          370.468542,
+          360.126583,
+          258.01075,
+          245.523875,
+          239.944958
+        ],
+        "c_optimized": [
+          286.678,
+          315.598,
+          241.102,
+          184.701,
+          184.603
+        ],
+        "c_portable": [
+          235.887,
+          269.451,
+          190.895,
+          170.444,
+          161.412
+        ]
+      },
+      "us_per_hash": {
+        "bend": 0.7207038288123329,
+        "lean": 682.5681216931216,
+        "c_optimized": 0.2299327850341797,
+        "c_portable": 0.3989404499430518
+      },
+      "lean_over_bend": 947.085466186497,
+      "bend_over_c": 3.134410904931194
+    },
+    {
+      "bytes": 64,
+      "counts": {
+        "bend": 512000,
+        "lean": 359,
+        "c_optimized": 1048576,
+        "c_portable": 678265
+      },
+      "samples_ms": {
+        "bend": [
+          342.0,
+          387.0,
+          432.0,
+          363.0,
+          371.0
+        ],
+        "lean": [
+          231.398791,
+          228.633375,
+          259.231083,
+          242.547834,
+          246.47725
+        ],
+        "c_optimized": [
+          194.013,
+          201.358,
+          277.218,
+          191.619,
+          187.153
+        ],
+        "c_portable": [
+          234.121,
+          246.923,
+          310.873,
+          250.642,
+          232.194
+        ]
+      },
+      "us_per_hash": {
+        "bend": 0.724609375,
+        "lean": 675.6207075208914,
+        "c_optimized": 0.18502521514892578,
+        "c_portable": 0.36405092404885997
+      },
+      "lean_over_bend": 932.3929979803138,
+      "bend_over_c": 3.916273651765603
+    },
+    {
+      "bytes": 135,
+      "counts": {
+        "bend": 341333,
+        "lean": 390,
+        "c_optimized": 1048576,
+        "c_portable": 724731
+      },
+      "samples_ms": {
+        "bend": [
+          267.0,
+          307.0,
+          311.0,
+          311.0,
+          319.0
+        ],
+        "lean": [
+          330.050125,
+          357.837834,
+          372.483708,
+          351.208791,
+          399.54875
+        ],
+        "c_optimized": [
+          262.24,
+          257.339,
+          253.097,
+          283.985,
+          336.179
+        ],
+        "c_portable": [
+          340.405,
+          329.984,
+          293.515,
+          347.465,
+          342.386
+        ]
+      },
+      "us_per_hash": {
+        "bend": 0.9111337022790061,
+        "lean": 917.5329076923076,
+        "c_optimized": 0.250091552734375,
+        "c_portable": 0.4696984122384719
+      },
+      "lean_over_bend": 1007.023343991442,
+      "bend_over_c": 3.6432006291981054
+    },
+    {
+      "bytes": 136,
+      "counts": {
+        "bend": 146286,
+        "lean": 91,
+        "c_optimized": 535604,
+        "c_portable": 280394
+      },
+      "samples_ms": {
+        "bend": [
+          230.0,
+          276.0,
+          247.0,
+          253.0,
+          243.0
+        ],
+        "lean": [
+          135.588917,
+          163.878792,
+          150.995458,
+          152.060458,
+          153.916916
+        ],
+        "c_optimized": [
+          233.088,
+          292.064,
+          255.985,
+          247.73,
+          230.856
+        ],
+        "c_portable": [
+          254.577,
+          283.276,
+          253.022,
+          253.976,
+          237.301
+        ]
+      },
+      "us_per_hash": {
+        "bend": 1.6884732647006548,
+        "lean": 1670.9940439560442,
+        "c_optimized": 0.4625245517210476,
+        "c_portable": 0.9057825773732676
+      },
+      "lean_over_bend": 989.6479138224853,
+      "bend_over_c": 3.6505592155440585
+    },
+    {
+      "bytes": 137,
+      "counts": {
+        "bend": 146286,
+        "lean": 154,
+        "c_optimized": 551353,
+        "c_portable": 280702
+      },
+      "samples_ms": {
+        "bend": [
+          249.0,
+          230.0,
+          253.0,
+          237.0,
+          253.0
+        ],
+        "lean": [
+          276.655542,
+          267.948667,
+          274.738042,
+          245.521458,
+          264.85625
+        ],
+        "c_optimized": [
+          266.411,
+          254.371,
+          250.199,
+          252.15,
+          265.332
+        ],
+        "c_portable": [
+          243.319,
+          252.012,
+          255.705,
+          252.551,
+          256.192
+        ]
+      },
+      "us_per_hash": {
+        "bend": 1.7021451129978262,
+        "lean": 1739.9264090909091,
+        "c_optimized": 0.4613577871164209,
+        "c_portable": 0.8997121502518686
+      },
+      "lean_over_bend": 1022.196283856517,
+      "bend_over_c": 3.6894253452110912
+    },
+    {
+      "bytes": 1024,
+      "counts": {
+        "bend": 36571,
+        "lean": 41,
+        "c_optimized": 135289,
+        "c_portable": 69579
+      },
+      "samples_ms": {
+        "bend": [
+          252.0,
+          248.0,
+          241.0,
+          248.0,
+          249.0
+        ],
+        "lean": [
+          294.159166,
+          286.28875,
+          277.268917,
+          288.718416,
+          290.62825
+        ],
+        "c_optimized": [
+          259.663,
+          261.695,
+          256.38,
+          263.468,
+          248.703
+        ],
+        "c_portable": [
+          229.544,
+          256.613,
+          242.522,
+          254.641,
+          225.989
+        ]
+      },
+      "us_per_hash": {
+        "bend": 6.781329468704711,
+        "lean": 7041.9125853658525,
+        "c_optimized": 1.919320861267361,
+        "c_portable": 3.4855631727963896
+      },
+      "lean_over_bend": 1038.4265530621556,
+      "bend_over_c": 3.5331921856082373
+    },
+    {
+      "bytes": 16384,
+      "counts": {
+        "bend": 2667,
+        "lean": 2,
+        "c_optimized": 6731,
+        "c_portable": 5136
+      },
+      "samples_ms": {
+        "bend": [
+          258.0,
+          265.0,
+          270.0,
+          266.0,
+          243.0
+        ],
+        "lean": [
+          219.897958,
+          235.7295,
+          244.07575,
+          199.409208,
+          187.764958
+        ],
+        "c_optimized": [
+          225.782,
+          212.772,
+          187.927,
+          177.671,
+          180.546
+        ],
+        "c_portable": [
+          296.777,
+          281.898,
+          278.582,
+          283.998,
+          256.553
+        ]
+      },
+      "us_per_hash": {
+        "bend": 99.36257967754031,
+        "lean": 109948.97899999999,
+        "c_optimized": 27.919625612836132,
+        "c_portable": 54.88668224299065
+      },
+      "lean_over_bend": 1106.5431207283018,
+      "bend_over_c": 3.558879372360139
+    },
+    {
+      "bytes": 65536,
+      "counts": {
+        "bend": 696,
+        "lean": 1,
+        "c_optimized": 2238,
+        "c_portable": 1225
+      },
+      "samples_ms": {
+        "bend": [
+          253.0,
+          258.0,
+          254.0,
+          260.0,
+          277.0
+        ],
+        "lean": [
+          384.766708,
+          425.129083,
+          446.123333,
+          387.771167,
+          424.324542
+        ],
+        "c_optimized": [
+          252.328,
+          275.564,
+          247.24,
+          268.667,
+          235.203
+        ],
+        "c_portable": [
+          276.572,
+          253.548,
+          243.341,
+          256.767,
+          245.111
+        ]
+      },
+      "us_per_hash": {
+        "bend": 370.6896551724138,
+        "lean": 424324.542,
+        "c_optimized": 112.74709562109025,
+        "c_portable": 206.97795918367348
+      },
+      "lean_over_bend": 1144.689462139535,
+      "bend_over_c": 3.2877978198054203
+    },
+    {
+      "bytes": 1048576,
+      "counts": {
+        "bend": 42,
+        "lean": 1,
+        "c_optimized": 153,
+        "c_portable": 75
+      },
+      "samples_ms": {
+        "bend": [
+          251.0,
+          252.0,
+          251.0,
+          270.0,
+          338.0
+        ],
+        "lean": [
+          6518.200083,
+          6305.230375,
+          7128.463333,
+          9749.400375,
+          9589.012333
+        ],
+        "c_optimized": [
+          252.588,
+          250.39,
+          264.837,
+          407.382,
+          587.841
+        ],
+        "c_portable": [
+          266.474,
+          232.737,
+          241.378,
+          319.565,
+          331.902
+        ]
+      },
+      "us_per_hash": {
+        "bend": 6000.0,
+        "lean": 7128463.333,
+        "c_optimized": 1730.9607843137255,
+        "c_portable": 3552.9866666666667
+      },
+      "lean_over_bend": 1188.0772221666666,
+      "bend_over_c": 3.466283034470259
+    }
+  ]
+}
