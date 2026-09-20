@@ -2,3 +2,5 @@ build/
 .venv/
 __pycache__/
 vendor/XKCP/
+
+vendor/lean-keccak/

@@ -31,7 +31,8 @@ The installed Bend has U32 but no native U64. Each lane therefore uses low/high 
 Requires Bend 2.0.16, Clang, Python 3.11+, `uv`, and Git. `BEND` can override the default `$HOME/.bend/bin/bend` executable.
 
 ```sh
-cd /Users/monkeair/work/bend-keccak
+git clone https://github.com/Giulio2002/bend-keccak.git
+cd bend-keccak
 uv sync
 uv run python tools/build.py
 uv run python tools/validate.py --mutations
@@ -43,7 +44,41 @@ uv run python tools/benchmark.py
 
 Validation checks all root laws through `PROOF.bend`, 278 differential cases on each backend, and ten mutations, all rejected by the proof checker. Differential cases cover every message length 0–273, 4 KiB and 64 KiB messages, dirty unused storage, and invalid capacities. Reference: PyCryptodome's **Keccak** API, not hashlib.sha3_256. Empty and `abc` known-answer examples are in `main.bend`.
 
-## Measurements
+## Bend versus Lean Keccak-256
+
+Apple M4, sequential native hashing, medians of five batches. **Microseconds per hash; lower is better.**
+
+| Input | Bend | Lean KeccakEngine | XKCP C | Lean / Bend |
+|---|---:|---:|---:|---:|
+| empty | 0.496 | 482.568 | 0.135 | 973× |
+| 32 B | 0.500 | 494.125 | 0.136 | 988× |
+| 64 B | 0.512 | 499.357 | 0.139 | 976× |
+| 136 B | 0.996 | 1,023.011 | 0.284 | 1,027× |
+| 1 KiB | 3.953 | 4,067.723 | 1.158 | 1,029× |
+| 16 KiB | 58.250 | 60,480.062 | 16.309 | 1,038× |
+| 64 KiB | 231.490 | 241,809.042 | 65.283 | 1,045× |
+| 1 MiB | 3,887.097 | 4,293,987.417 | 1,148.693 | 1,105× |
+
+This measures [KeccakEngine](https://github.com/AlexeyMilovanov/lean-keccak-unrolled)
+at `053b9dd` with Lean 4.29.0. Its compiled path uses generic `BitVec 64` and array
+operations; this result is **not a claim about the fastest possible Lean implementation**.
+A benchmark-only binding selects the same runtime function as upstream's
+`implemented_by` attribute. The upstream permutation and sponge source files are
+unchanged; its separate proof chain was not rebuilt. See the
+[methodology and reproduction commands](benchmarks/LEAN.md).
+
+Both implementations passed matching full-digest tests (276 Lean, 278 Bend cases
+including capacity rejection). Every timed checksum was validated. Input preparation
+is excluded; Bend's required input clone is included, while Lean reuses an immutable
+ByteArray. Clang `-O3 -march=native` is used; Lean uses its bundled Clang 19 and
+Bend/XKCP use Apple Clang 17. This is a shared-host measurement.
+
+[Raw samples and source/binary identities](benchmarks/lean-comparison-arm64.json).
+The **at-most-2×-C target is not met**: the measured production implementation is
+roughly 3.4–3.7× C. [Optimization investigation](benchmarks/OPTIMIZATION.md).
+Unproved experimental variants have not replaced the public implementation.
+
+## Earlier C-only measurements
 
 Apple M4, medians of five alternating samples after one warmup. Microseconds per hash:
 
