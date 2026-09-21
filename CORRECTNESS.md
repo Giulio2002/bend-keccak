@@ -56,3 +56,31 @@ The earlier component laws remain checked: universal round and constant refineme
 ## Trusted components
 
 Bend 2.0.16's parser, termination/quantity checker and equality kernel; Base U32/Nat/Array semantics; native array lowering and other compiler passes; Clang; the platform runtime/CPU. C and PyCryptodome are independent empirical references, not axioms imported into the proofs. The project introduces no proof holes, unsafe recursion, FFI, or additional axioms. Emitted source from development generators is checked normally; generators are not proof oracles.
+
+
+## Formatting and audit boundary
+
+The universal sponge theorem returns the packed eight-word digest. It does not
+state a theorem about `src/hex.bend` or the public `hex` convenience wrapper.
+Formatting is checked empirically by the 278 full-digest comparisons on each
+backend, which pass their results through that formatter. A universal formatting
+refinement theorem remains a separate proof obligation; no such theorem is
+claimed here.
+
+`hex` is intended for the eight-word digest returned by `keccak256`. The hash's
+final padding path also relies on the trusted Base array semantics: `Array.get`
+masks an index by the reported capacity minus one, and padding ignores unused
+input values. Nominal reads beyond the logical remainder are not, by themselves,
+an out-of-allocation read in the native backend. This is a documented dependency
+on Base and compiler semantics, not a new memory-safety theorem.
+
+`tools/check_proof_imports.py` checks the local source hashes against the existing
+BendHub manifest, checks the runtime and proof entry files, and inserts an unused
+false law in a temporary copy. Both `PROOF.bend` and `package.bend` must reject
+that false law at its definition. This directly tests that imported proof modules
+are checked even when a particular definition is not called. It does not prove
+the kernel sound or fetch/re-publish the immutable BendHub package.
+
+The [reviewed V4.1 Flash audit](audit/2026-09-21/REVIEW.md) records both useful
+coverage observations and rejected model allegations. No automatic proof or
+runtime repair was accepted from that run.

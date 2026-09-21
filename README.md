@@ -65,6 +65,12 @@ def example() -> Maybe<&1,Array<U32>>:
 
 The installed Bend has U32 but no native U64. Each lane therefore uses low/high halves. Fixed rotations, two-round fusion, and packed padding avoid generic rotation calls and byte-wise padding loops. No list compatibility API is provided.
 
+`hex` is a convenience formatter for the eight-word digest returned by
+`keccak256`. Its output is exercised by the full-digest differential tests, but
+it has no separate kernel-checked formatting theorem. See
+[the reviewed proof-swarmer audit](audit/2026-09-21/REVIEW.md) for this boundary
+and the audit results.
+
 ## Build and validate
 
 Requires Bend 2.0.16, Clang, Python 3.11+, `uv`, and Git. `BEND` can override the default `$HOME/.bend/bin/bend` executable.
@@ -75,6 +81,7 @@ cd bend-keccak
 uv sync
 uv run python tools/build.py
 uv run python tools/validate.py --mutations
+uv run python tools/check_proof_imports.py
 ./build/main --threads 1 --gpu off
 uv run python tools/benchmark.py
 ```

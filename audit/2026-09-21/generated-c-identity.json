@@ -1,0 +1,6 @@
+{
+  "before_sha256": "5d5dbad71f0261cfb8dd19762d4a729650614ea17765fd0389d3b0c4ac3acace",
+  "after_sha256": "5d5dbad71f0261cfb8dd19762d4a729650614ea17765fd0389d3b0c4ac3acace",
+  "identical": true,
+  "scope": "Generated C from the same stock Bend 2.0.16 driver, in the same worktree before and after documentation/checker additions. No runtime speedup claimed."
+}
