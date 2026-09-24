@@ -11,3 +11,6 @@ def Laws.capacity_rejection(a,n,capacity,invalid): A.capacity_gate(a,n,capacity,
 def Laws.packed_sponge_correct(r,a,length): S.hash_correct(r,a,length)
 def Laws.ethereum_round_count(a,length): S.ethereum_round_count(a,length)
 def Laws.ethereum_keccak256(a,length): S.public_correct(a,length)
+
+def Laws.interleaved_permutation(n,i,s): P.steps_spec(n,i,s)
+def Laws.interleave_roundtrip(lo,hi): P.roundtrip_il(lo,hi)

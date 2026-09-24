@@ -1,4 +1,18 @@
-# Four-way Keccak-256 benchmark
+# Keccak-256 benchmarks
+
+## x86-64: interleaved implementation
+
+`results-x86_64.json` compares the current (bit-interleaved, lane-complemented)
+Bend implementation with the previous plain-lane Bend implementation (commit
+`b36ae58`), XKCP `plain-64bits` and XKCP `compact`, on an idle AMD EPYC 4585PX
+with one pinned core. Bend binaries are built plainly, `bend benchmarks/driver.bend
+-o build/bench`, which compiles Bend's C with its own `clang -O3`; C uses
+`clang -O3 -march=native -std=c11`. All binaries were built with Debian clang 19.1.7
+on another x86-64 host and copied over. Workload, calibration, sampling and checksum
+validation are as described below. `tools/benchmark_x86.py` reproduces it
+(`--previous BINARY` adds a previous Bend build).
+
+## Four-way comparison (Apple M4, previous implementation)
 
 All participants hash Ethereum Keccak-256 (136-byte rate, 24 rounds, `0x01`
 suffix), not SHA3-256. The primary results are `comparison-arm64.json`.

@@ -22,7 +22,7 @@ def audit():
 
 def main():
  parser=argparse.ArgumentParser();parser.add_argument('--mutations',action='store_true');args=parser.parse_args();(P/'build').mkdir(exist_ok=True);audit();report={}
- start=time.monotonic();out=run([B,'PROOF.bend']);assert 'All terms check.' in out;report['proof_seconds']=time.monotonic()-start;print('Public sponge and component laws: checked',flush=True)
+ start=time.monotonic();out=run([B,'PROOF.bend'],timeout=900);assert 'All terms check.' in out;report['proof_seconds']=time.monotonic()-start;print('Public sponge and component laws: checked',flush=True)
  for backend in ['js','native']:
   if backend=='js':out=run([B,'tests/vectors.bend'])
   else:
@@ -34,15 +34,23 @@ def main():
   (P/'build'/f'vectors-{backend}.txt').write_text(out);report[backend+'_cases']=len(expected);print(backend,len(expected),'passed',flush=True)
  if args.mutations:
   mutations=[
-   ('rotation','src/lane.bend','U32.shln(lo,12n)','U32.shln(lo,11n)','proof'),
-   ('constant','src/permutation.bend','case 0n: T.W{1,0}','case 0n: T.W{2,0}','proof'),
-   ('chi','src/lane.bend','U32.xor(bl,4294967295)','U32.xor(bl,4294967294)','proof'),
+   ('theta_rotation','src/permutation.bend','U32.or(U32.shln(c1or0,1n),U32.shrn(c1or0,31n))','U32.or(U32.shln(c1or0,1n),U32.shrn(c1or0,30n))','proof'),
+   ('rho_rotation','src/permutation.bend','U32.shln(U32.xor(e6,d1er0),22n),U32.shrn(U32.xor(e6,d1er0),10n)','U32.shln(U32.xor(e6,d1er0),21n),U32.shrn(U32.xor(e6,d1er0),11n)','proof'),
+   ('constant','src/permutation.bend','    case 0n: 1\n','    case 0n: 2\n','proof'),
+   ('chi','src/permutation.bend','+q1er0 = U32.xor(b1er0,U32.or(U32.not(b2er0),b3er0))','+q1er0 = U32.xor(b1er0,U32.and(U32.not(b2er0),b3er0))','proof'),
+   ('complemented_initial_state','src/permutation.bend','T.St{0,0,4294967295,4294967295','T.St{0,0,0,4294967295','proof'),
+   ('interleave_table','src/lane.bend','case 3n: 65537','case 3n: 65536','proof'),
+   ('deinterleave_swap','src/lane.bend','U32.and(572662306,','U32.and(572662307,','proof'),
+   ('absorb_lane_words','src/lane.bend','U32.xor(e0,even(l0,h0))','U32.xor(e0,even(h0,l0))','proof'),
+   ('leave_complement','src/lane.bend','T.W{low(U32.not(e1),U32.not(o1))','T.W{low(e1,U32.not(o1))','proof'),
+   ('squeeze_order','src/lane.bend','high(e3,o3)},T.W{0,0}','high(o3,e3)},T.W{0,0}','proof'),
    ('digest_order','src/keccak.bend','Array.set(U32,a,0,l0)','Array.set(U32,a,0,h0)','proof'),
    ('capacity','src/keccak.bend','Nat.is_le(length,Nat.mul','Nat.is_ge(length,Nat.mul','proof'),
    ('partial_suffix','src/keccak.bend','case 0n: 1','case 0n: 2','proof'),
-   ('final_padding_bit','src/keccak.bend','U32.or(pad_word(w33,132n,remain),2147483648)','U32.or(pad_word(w33,132n,remain),1073741824)','proof')]
-  mutations += [
+   ('padding_word','src/keccak.bend','L.mix(s,pad_word(w0,0n,remain)','L.mix(s,pad_word(w0,4n,remain)','proof'),
+   ('final_padding_bit','src/keccak.bend','U32.or(pad_word(w33,132n,remain),2147483648)','U32.or(pad_word(w33,132n,remain),1073741824)','proof'),
    ('block_word_index','src/keccak.bend','Array.get(U32,a,U32.add(index,33))','Array.get(U32,a,U32.add(index,32))','proof'),
+   ('block_stride','src/keccak.bend','blocks(round_count,p,U32.add(index,34)','blocks(round_count,p,U32.add(index,33)','proof'),
    ('block_count','src/keccak.bend','Nat.div(length,136n)','Nat.div(length,135n)','proof'),
    ('selected_round_count','src/keccak.bend','keccak256_rounds(24n,a,length)','keccak256_rounds(23n,a,length)','proof')]
   report['mutations']=[]
@@ -52,7 +60,7 @@ def main():
     for folder in ['src','spec','proofs']:shutil.copytree(P/folder,q/folder)
     for f in ['PROOF.bend','LAWS.bend','main.bend']:shutil.copy(P/f,q/f)
     f=q/file;s=f.read_text();assert old in s,(name,old);f.write_text(s.replace(old,new,1))
-    r=subprocess.run([B,'PROOF.bend' if mode=='proof' else 'main.bend'],cwd=q,capture_output=True,text=True,timeout=120)
+    r=subprocess.run([B,'PROOF.bend' if mode=='proof' else 'main.bend'],cwd=q,capture_output=True,text=True,timeout=900)
     if mode=='proof':assert r.returncode!=0 and 'expected' in r.stderr+r.stdout,(name,r.stdout[:500],r.stderr[:500])
     else:assert r.returncode==0 and r.stdout.splitlines()[0]!='c5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470'
     report['mutations'].append({'name':name,'rejected_by':mode});print('Mutation rejected:',name,mode,flush=True)

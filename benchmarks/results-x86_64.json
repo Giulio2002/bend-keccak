@@ -1,0 +1,497 @@
+{
+  "host": "Linux-6.12.48+deb13-amd64-x86_64-with-glibc2.41",
+  "cpu": "AMD EPYC 4585PX 16-Core Processor",
+  "pinned_cpu": 5,
+  "load_average": [
+    0.15283203125,
+    0.06396484375,
+    0.0126953125
+  ],
+  "timestamp_utc": "2026-09-24T17:43:01Z",
+  "compiler": "Debian clang version 19.1.7 (3+b1), on the build host (EPYC 9554); -march=native there for C",
+  "builds": {
+    "bend": "bend benchmarks/driver.bend -o build/bench",
+    "c": "clang -O3 -march=native -std=c11 (tools/build_c.py)"
+  },
+  "boundary": "Sequential repeated public hashes of prepared data; input generation, startup and validation excluded. Bend clones its consumed input per hash; C copies into preallocated scratch. Digest checksums checked against PyCryptodome Keccak.",
+  "samples": 5,
+  "target_batch_ms": 250,
+  "binary_sha256": {
+    "bend": "2435b9423a42e427e0380d3fe4d5a19fe47f4fe5b567e41144e5ac201351da7f",
+    "c_optimized": "3aba910fa18b9bf83a2e8ecf92644f3cecdbc618e9c8556fd718658cd905db13",
+    "c_portable": "7625f48e10a39cb5bb22fc2fe27047b53a57cc722d824b0461db1ad1306a8e3f",
+    "bend_previous": "6b5b8fd8a677c7e2a07d1fd669a9630a9bc804933778af585d8bf2f5f0d5db25"
+  },
+  "rows": [
+    {
+      "bytes": 0,
+      "counts": {
+        "bend": 512000,
+        "c_optimized": 1048576,
+        "c_portable": 408355,
+        "bend_previous": 341333
+      },
+      "samples_ms": {
+        "bend": [
+          240.0,
+          240.0,
+          240.0,
+          240.0,
+          240.0
+        ],
+        "c_optimized": [
+          213.018101,
+          212.885533,
+          213.929497,
+          212.076366,
+          213.269748
+        ],
+        "c_portable": [
+          234.203976,
+          234.114464,
+          234.073106,
+          251.003679,
+          245.96915
+        ],
+        "bend_previous": [
+          250.0,
+          250.0,
+          250.0,
+          249.0,
+          250.0
+        ]
+      },
+      "us_per_hash": {
+        "bend": 0.46875,
+        "c_optimized": 0.20314989185333251,
+        "c_portable": 0.5735303253296764,
+        "bend_previous": 0.7324225902564357
+      },
+      "bend_over_c": 2.307409547322929,
+      "previous_over_bend": 1.5625015258803963
+    },
+    {
+      "bytes": 32,
+      "counts": {
+        "bend": 512000,
+        "c_optimized": 1048576,
+        "c_portable": 372737,
+        "bend_previous": 341333
+      },
+      "samples_ms": {
+        "bend": [
+          246.0,
+          246.0,
+          246.0,
+          246.0,
+          247.0
+        ],
+        "c_optimized": [
+          235.955067,
+          233.241379,
+          234.657072,
+          238.103367,
+          236.404732
+        ],
+        "c_portable": [
+          215.050928,
+          230.622731,
+          214.616489,
+          224.769026,
+          230.861299
+        ],
+        "bend_previous": [
+          251.0,
+          250.0,
+          251.0,
+          250.0,
+          252.0
+        ]
+      },
+      "us_per_hash": {
+        "bend": 0.48046875,
+        "c_optimized": 0.22502428722381593,
+        "c_portable": 0.603023112811446,
+        "bend_previous": 0.7353522806174615
+      },
+      "bend_over_c": 2.1351861878007474,
+      "previous_over_bend": 1.5304892994965051
+    },
+    {
+      "bytes": 64,
+      "counts": {
+        "bend": 512000,
+        "c_optimized": 1048576,
+        "c_portable": 296379,
+        "bend_previous": 341333
+      },
+      "samples_ms": {
+        "bend": [
+          247.0,
+          247.0,
+          247.0,
+          247.0,
+          247.0
+        ],
+        "c_optimized": [
+          243.798781,
+          245.570559,
+          242.924221,
+          244.987126,
+          244.510725
+        ],
+        "c_portable": [
+          211.645268,
+          183.799949,
+          171.371989,
+          183.595736,
+          195.642319
+        ],
+        "bend_previous": [
+          261.0,
+          261.0,
+          261.0,
+          261.0,
+          260.0
+        ]
+      },
+      "us_per_hash": {
+        "bend": 0.482421875,
+        "c_optimized": 0.2331835985183716,
+        "c_portable": 0.6201517280239153,
+        "bend_previous": 0.764649184227719
+      },
+      "bend_over_c": 2.0688499451302187,
+      "previous_over_bend": 1.5850217907878223
+    },
+    {
+      "bytes": 135,
+      "counts": {
+        "bend": 512000,
+        "c_optimized": 875357,
+        "c_portable": 393351,
+        "bend_previous": 256000
+      },
+      "samples_ms": {
+        "bend": [
+          254.0,
+          253.0,
+          254.0,
+          255.0,
+          253.0
+        ],
+        "c_optimized": [
+          214.601878,
+          214.474671,
+          214.119121,
+          214.308441,
+          214.791816
+        ],
+        "c_portable": [
+          241.531301,
+          229.522076,
+          246.169224,
+          245.977007,
+          241.767887
+        ],
+        "bend_previous": [
+          198.0,
+          198.0,
+          197.0,
+          197.0,
+          198.0
+        ]
+      },
+      "us_per_hash": {
+        "bend": 0.49609375,
+        "c_optimized": 0.24501394402512347,
+        "c_portable": 0.6146365129362833,
+        "bend_previous": 0.7734375
+      },
+      "bend_over_c": 2.0247572111615453,
+      "previous_over_bend": 1.5590551181102361
+    },
+    {
+      "bytes": 136,
+      "counts": {
+        "bend": 256000,
+        "c_optimized": 539482,
+        "c_portable": 216503,
+        "bend_previous": 170667
+      },
+      "samples_ms": {
+        "bend": [
+          232.0,
+          231.0,
+          231.0,
+          231.0,
+          232.0
+        ],
+        "c_optimized": [
+          249.838673,
+          249.694571,
+          249.968838,
+          250.064589,
+          248.973209
+        ],
+        "c_portable": [
+          261.6258,
+          266.420845,
+          261.862583,
+          266.486708,
+          261.67009
+        ],
+        "bend_previous": [
+          254.0,
+          254.0,
+          254.0,
+          255.0,
+          255.0
+        ]
+      },
+      "us_per_hash": {
+        "bend": 0.90234375,
+        "c_optimized": 0.4631084503282779,
+        "c_portable": 1.2095101823069425,
+        "bend_previous": 1.4882783432063609
+      },
+      "bend_over_c": 1.9484501942479495,
+      "previous_over_bend": 1.649347427968954
+    },
+    {
+      "bytes": 137,
+      "counts": {
+        "bend": 256000,
+        "c_optimized": 522007,
+        "c_portable": 215806,
+        "bend_previous": 170667
+      },
+      "samples_ms": {
+        "bend": [
+          230.0,
+          231.0,
+          232.0,
+          231.0,
+          232.0
+        ],
+        "c_optimized": [
+          249.160983,
+          249.671049,
+          244.803622,
+          249.186762,
+          249.415599
+        ],
+        "c_portable": [
+          248.911243,
+          248.402651,
+          261.629295,
+          261.289179,
+          266.349945
+        ],
+        "bend_previous": [
+          255.0,
+          256.0,
+          254.0,
+          255.0,
+          255.0
+        ]
+      },
+      "us_per_hash": {
+        "bend": 0.90234375,
+        "c_optimized": 0.47736287444421244,
+        "c_portable": 1.2107595664624708,
+        "bend_previous": 1.4941377067622914
+      },
+      "bend_over_c": 1.8902679665874464,
+      "previous_over_bend": 1.6558409217798553
+    },
+    {
+      "bytes": 1024,
+      "counts": {
+        "bend": 73143,
+        "c_optimized": 136864,
+        "c_portable": 53615,
+        "bend_previous": 42667
+      },
+      "samples_ms": {
+        "bend": [
+          254.0,
+          253.0,
+          253.0,
+          254.0,
+          253.0
+        ],
+        "c_optimized": [
+          248.850692,
+          248.477679,
+          249.539293,
+          247.340728,
+          248.860519
+        ],
+        "c_portable": [
+          259.395849,
+          264.678467,
+          246.745985,
+          259.396393,
+          259.545498
+        ],
+        "bend_previous": [
+          253.0,
+          253.0,
+          253.0,
+          252.0,
+          253.0
+        ]
+      },
+      "us_per_hash": {
+        "bend": 3.4589776191843375,
+        "c_optimized": 1.8182333703530513,
+        "c_portable": 4.838130989461904,
+        "bend_previous": 5.929641174678323
+      },
+      "bend_over_c": 1.9023837509443018,
+      "previous_over_bend": 1.7142756697213302
+    },
+    {
+      "bytes": 16384,
+      "counts": {
+        "bend": 5333,
+        "c_optimized": 9181,
+        "c_portable": 3624,
+        "bend_previous": 2667
+      },
+      "samples_ms": {
+        "bend": [
+          274.0,
+          274.0,
+          274.0,
+          274.0,
+          273.0
+        ],
+        "c_optimized": [
+          249.777447,
+          249.663938,
+          249.876734,
+          249.822583,
+          249.603752
+        ],
+        "c_portable": [
+          251.437038,
+          352.235515,
+          269.891605,
+          264.772817,
+          269.385234
+        ],
+        "bend_previous": [
+          237.0,
+          237.0,
+          238.0,
+          237.0,
+          237.0
+        ]
+      },
+      "us_per_hash": {
+        "bend": 51.378211138196136,
+        "c_optimized": 27.20590861561921,
+        "c_portable": 74.3336738410596,
+        "bend_previous": 88.86389201349832
+      },
+      "bend_over_c": 1.8884945863818472,
+      "previous_over_bend": 1.7296026865254983
+    },
+    {
+      "bytes": 65536,
+      "counts": {
+        "bend": 1231,
+        "c_optimized": 2243,
+        "c_portable": 850,
+        "bend_previous": 696
+      },
+      "samples_ms": {
+        "bend": [
+          252.0,
+          252.0,
+          253.0,
+          252.0,
+          252.0
+        ],
+        "c_optimized": [
+          243.965492,
+          243.622601,
+          244.44446,
+          244.163264,
+          243.79836
+        ],
+        "c_portable": [
+          247.381456,
+          235.898752,
+          236.021612,
+          235.890325,
+          255.014416
+        ],
+        "bend_previous": [
+          246.0,
+          246.0,
+          246.0,
+          246.0,
+          246.0
+        ]
+      },
+      "us_per_hash": {
+        "bend": 204.71161657189276,
+        "c_optimized": 108.7674953187695,
+        "c_portable": 277.67248470588237,
+        "bend_previous": 353.44827586206895
+      },
+      "bend_over_c": 1.8821028835125397,
+      "previous_over_bend": 1.7265667761357417
+    },
+    {
+      "bytes": 1048576,
+      "counts": {
+        "bend": 83,
+        "c_optimized": 144,
+        "c_portable": 52,
+        "bend_previous": 50
+      },
+      "samples_ms": {
+        "bend": [
+          272.0,
+          272.0,
+          272.0,
+          271.0,
+          272.0
+        ],
+        "c_optimized": [
+          250.513308,
+          250.78842,
+          250.827495,
+          250.756461,
+          250.471801
+        ],
+        "c_portable": [
+          242.92342,
+          247.356229,
+          247.510497,
+          257.605575,
+          231.478836
+        ],
+        "bend_previous": [
+          282.0,
+          283.0,
+          283.0,
+          283.0,
+          283.0
+        ]
+      },
+      "us_per_hash": {
+        "bend": 3277.10843373494,
+        "c_optimized": 1741.3643125,
+        "c_portable": 4756.850557692308,
+        "bend_previous": 5660.0
+      },
+      "bend_over_c": 1.8819200613053448,
+      "previous_over_bend": 1.7271323529411764
+    }
+  ]
+}
