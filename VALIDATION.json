@@ -1,10 +1,14 @@
 {
-  "proof_seconds": 3.7496401669923216,
+  "proof_seconds": 69.48073610995198,
   "js_cases": 278,
   "native_cases": 278,
   "mutations": [
     {
-      "name": "rotation",
+      "name": "theta_rotation",
+      "rejected_by": "proof"
+    },
+    {
+      "name": "rho_rotation",
       "rejected_by": "proof"
     },
     {
@@ -13,6 +17,30 @@
     },
     {
       "name": "chi",
+      "rejected_by": "proof"
+    },
+    {
+      "name": "complemented_initial_state",
+      "rejected_by": "proof"
+    },
+    {
+      "name": "interleave_table",
+      "rejected_by": "proof"
+    },
+    {
+      "name": "deinterleave_swap",
+      "rejected_by": "proof"
+    },
+    {
+      "name": "absorb_lane_words",
+      "rejected_by": "proof"
+    },
+    {
+      "name": "leave_complement",
+      "rejected_by": "proof"
+    },
+    {
+      "name": "squeeze_order",
       "rejected_by": "proof"
     },
     {
@@ -28,11 +56,19 @@
       "rejected_by": "proof"
     },
     {
+      "name": "padding_word",
+      "rejected_by": "proof"
+    },
+    {
       "name": "final_padding_bit",
       "rejected_by": "proof"
     },
     {
       "name": "block_word_index",
+      "rejected_by": "proof"
+    },
+    {
+      "name": "block_stride",
       "rejected_by": "proof"
     },
     {

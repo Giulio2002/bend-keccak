@@ -2,7 +2,7 @@
 
 Ethereum **Keccak-256** in Bend 2.0.16, with native packed arrays, checked component laws, differential tests, and a benchmark against XKCP's optimized portable C. This is **not SHA3-256**: it uses the Keccak domain suffix `0x01`, a 136-byte rate, 512-bit capacity, and 24 Keccak-f[1600] rounds.
 
-Current status: the **full public packed-input sponge refinement is kernel-checked**, including absorption, padding, repeated blocks, capacity rejection and all digest words. The generated C's round scheduling has been optimized to reduce register spills. It remains slower than optimized 64-bit C; see the measured results below.
+Current status: the **full public packed-input sponge refinement is kernel-checked**, including absorption, padding, repeated blocks, capacity rejection and all digest words. The state is bit-interleaved and partly complemented, so each 64-bit rotation costs two 32-bit rotations and chi needs few NOTs. It remains slower than optimized 64-bit C; see the measured results below.
 
 ## Install from BendHub
 
@@ -42,6 +42,8 @@ The MIT-licensed bundle contains 15 Bend source files (149,853 bytes), including
 independent specifications and proofs. It uses stock Bend, packed arrays, and no
 cryptographic FFI. The exact proven boundary and trusted components are documented
 in [CORRECTNESS.md](CORRECTNESS.md). The package hash pins immutable source.
+That published package predates the interleaved implementation in this
+repository; it computes the same digests.
 
 ## API
 
@@ -63,7 +65,7 @@ def example() -> Maybe<&1,Array<U32>>:
 - Use balanced arrays created by `Array.new` / `Array.set`; follow Base.Array's representation contract.
 - Hash input/output and temporary storage use native arrays; state is a fixed record of 25 two-U32 lanes. There are **no runtime linked lists, array/list conversions, foreign calls, or modified compiler requirements**.
 
-The installed Bend has U32 but no native U64. Each lane therefore uses low/high halves. Fixed rotations, two-round fusion, and packed padding avoid generic rotation calls and byte-wise padding loops. No list compatibility API is provided.
+The installed Bend has U32 but no native U64. The state therefore holds each lane as its even bits and its odd bits in two U32s (bit interleaving), so a 64-bit rotation is two 32-bit rotations. Six lanes are held complemented (lane complementing), which removes most NOTs from chi. Input words are interleaved by byte tables as they are absorbed; only the four digest lanes are converted back. Two rounds are fused per step, and padding is applied per packed word. No list compatibility API is provided.
 
 ## Build and validate
 
@@ -81,9 +83,41 @@ uv run python tools/benchmark.py
 
 `tools/build.py` fetches the pinned XKCP reference **for comparison only**. The Bend library has no runtime dependency on it. Both native benchmarks compile with `clang -O3 -march=native -std=c11`.
 
-Validation checks all root laws through `PROOF.bend`, 278 differential cases on each backend, and ten mutations, all rejected by the proof checker. Differential cases cover every message length 0–273, 4 KiB and 64 KiB messages, dirty unused storage, and invalid capacities. Reference: PyCryptodome's **Keccak** API, not hashlib.sha3_256. Empty and `abc` known-answer examples are in `main.bend`.
+Validation checks all root laws through `PROOF.bend`, 278 differential cases on each backend, and nineteen mutations, all rejected by the proof checker. Differential cases cover every message length 0–273, 4 KiB and 64 KiB messages, dirty unused storage, and invalid capacities. Reference: PyCryptodome's **Keccak** API, not hashlib.sha3_256. Empty and `abc` known-answer examples are in `main.bend`.
 
-## Benchmarks: Bend, optimized C, portable C, and Lean
+## Benchmarks
+
+### x86-64: interleaved implementation
+
+AMD EPYC 4585PX (idle host, one pinned core), sequential native hashing.
+**Microseconds per hash, median of five measured batches after warmup; lower is
+faster.** "Previous Bend" is the plain-lane implementation this repository
+shipped before (commit `b36ae58`), with the same driver. Bend binaries are built
+plainly (`bend benchmarks/driver.bend -o build/bench`, Bend's own `clang -O3`); C
+uses `clang -O3 -march=native`, all with Debian clang 19.1.7.
+
+| Input | Bend | Previous Bend | Optimized C | Portable C (compact) | Bend / optimized C | Speedup over previous |
+|---|---:|---:|---:|---:|---:|---:|
+| empty | 0.469 | 0.732 | 0.203 | 0.574 | 2.31× | 1.56× |
+| 32 B | 0.480 | 0.735 | 0.225 | 0.603 | 2.14× | 1.53× |
+| 64 B | 0.482 | 0.765 | 0.233 | 0.620 | 2.07× | 1.59× |
+| 135 B | 0.496 | 0.773 | 0.245 | 0.615 | 2.02× | 1.56× |
+| 136 B | 0.902 | 1.488 | 0.463 | 1.210 | 1.95× | 1.65× |
+| 137 B | 0.902 | 1.494 | 0.477 | 1.211 | 1.89× | 1.66× |
+| 1 KiB | 3.459 | 5.930 | 1.818 | 4.838 | 1.90× | 1.71× |
+| 16 KiB | 51.378 | 88.864 | 27.206 | 74.334 | 1.89× | 1.73× |
+| 64 KiB | 204.712 | 353.448 | 108.767 | 277.672 | 1.88× | 1.73× |
+| 1 MiB | 3,277.108 | 5,660.000 | 1,741.364 | 4,756.851 | 1.88× | 1.73× |
+
+Raw samples, counts and binary hashes: [results-x86_64.json](benchmarks/results-x86_64.json).
+Reproduce with `python3 tools/benchmark_x86.py --cpu N [--previous BINARY]` after
+`tools/build.py`.
+
+### Apple M4: previous implementation, with Lean
+
+The table below was measured before the interleaved implementation; it compares the
+previous plain-lane Bend with C and Lean.
+
 
 Apple M4, sequential native hashing. **Microseconds per hash, median of five
 measured batches after warmup; lower is faster.** All four participants ran in the
@@ -122,8 +156,7 @@ covers 276 cases per reference and 278 Bend cases, including capacity rejection.
 The separate upstream Lean proof chain is not rebuilt; a benchmark binding selects
 its exact `implemented_by` runtime function with unchanged permutation/sponge files.
 
-**The ≤2× target against optimized C is not met.** The compact C column does not
-replace that target. Shared-host load causes substantial sample variation; raw
+**On the M4, the previous implementation did not meet the ≤2× target against optimized C.** On the x86-64 host above, the interleaved implementation meets it for every input of one block or more (1.88–1.95× from 136 B up) and is 2.02–2.31× on inputs shorter than one block. The compact C column does not replace that target. Shared-host load causes substantial sample variation; raw
 samples and counts are retained. Older JSON files are historical runs.
 
 For example, the 1 MiB per-hash sample ranges were Bend 5.98–8.05 ms, optimized C 1.64–3.84 ms, Lean 6,305.23–9,749.40 ms. These ranges show the load variation behind the medians.
@@ -144,9 +177,9 @@ uv run python tools/benchmark_all.py
 
 See [CORRECTNESS.md](CORRECTNESS.md) for exact properties, limitations and trusted components.
 
-- `src/`: production lane operations, fixed state, permutation, sponge and formatting.
-- `spec/`: separate coordinate-based permutation specification, importing only Base and the shared state datatype.
-- `proofs/`: full sponge refinement, permutation laws, affine-array proof model and component proofs.
+- `src/`: production state types, word/lane interleaving (`lane.bend`), interleaved permutation, sponge and formatting. `permutation.bend`, `lane.bend` and `keccak.bend` are generated by `tools/generate_impl.py`.
+- `spec/`: separate coordinate-based permutation specification, importing only Base and the shared state datatype; `interleave.bend` defines the interleaved representation as bit shuffles.
+- `proofs/`: full sponge refinement, permutation and conversion proofs (generated with the implementation), bit extensionality, affine-array proof model and component proofs.
 - `LAWS.bend`, `PROOF.bend`: public law declarations and the proof gate.
 - `tests/`: packed-array differential drivers.
 - `benchmarks/`: independent C wrapper, Bend driver, raw measurements.
